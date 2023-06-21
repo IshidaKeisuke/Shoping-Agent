@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
 import { HelperText } from 'react-native-paper';
 import { SignUp } from '../../../services/AuthService';
-import { ScreenProps } from '../../../types/interface'
 import styles from './Styles';
 import Input from '../../../components/Input/Input';
 import Button from '../../../components/Button/Button';
+import { ScreenProps } from '../../../types/interface'
 
-const SignUpScreen: React.FC<ScreenProps> = ({ navigation }) => {
+const SignUpScreen: React.FC<ScreenProps<'SignUp'>> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleSignUp = async () => {
     try {
-      console.log(email)
-      console.log(password)
       await SignUp(email, password);
       setError('');
+      navigation.navigate('ConfirmSignUp', { email });
     } catch (err) {
       const error = err as Error;
       console.log(error)
@@ -72,7 +72,7 @@ const SignUpScreen: React.FC<ScreenProps> = ({ navigation }) => {
       <HelperText type="error" visible={!!error}>
         {error}
       </HelperText>
-      <TouchableOpacity onPress={() => navigation.navigate('ログイン')} style={styles.signIn}> 
+      <TouchableOpacity onPress={() => navigation.navigate('SignIn')} style={styles.signIn}> 
         <Text style={styles.signInText}>すでに会員登録済みの方はこちら</Text> 
       </TouchableOpacity>
     </View>

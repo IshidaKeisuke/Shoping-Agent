@@ -19,3 +19,13 @@ export const SignUp = async (email: string, password: string) => {
     return Promise.reject(error);
   }
 }
+
+export const ConfirmSignUp = async (email: string, code: string) => {
+  try {
+    await Auth.confirmSignUp(email, code);
+    console.log('User confirmed sign up');
+  } catch (error) {
+    console.log('error confirming sign up:', error);
+    throw error;
+  }
+}
