@@ -29,3 +29,14 @@ export const ConfirmSignUp = async (email: string, code: string) => {
     throw error;
   }
 }
+
+export const SignIn = async(email: string, password: string) => {
+  try {
+    const response = await Auth.signIn(email, password);
+    return response.user;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+

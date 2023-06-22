@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text } from 'react-native';
 import { Auth } from 'aws-amplify';
-import { ScreenProps } from '../../types/interface';
+import { CognitoUser } from 'amazon-cognito-identity-js';
+import { useNavigation } from '@react-navigation/native';
 import Loading from '../../components/Loading/Loading';
+import Button from '../../components/Button/Button';
+import styles from './Styles';
 
-const HomeScreen: React.FC<ScreenProps<'Home'>> = ({ navigation }) => {
-  const [user, setUser] = useState(null);
+
+const HomeScreen: React.FC = () => {
+  const navigation = useNavigation();
+  const [user, setUser] = useState<CognitoUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -38,14 +43,24 @@ const HomeScreen: React.FC<ScreenProps<'Home'>> = ({ navigation }) => {
     <View>
       {user ? (
         <>
-          <Text>Welcome, {user.username}</Text>
+          <Text>Welcome, {user.getUsername()}</Text>
           <Button title="Sign out" onPress={handleSignOut} />
         </>
       ) : (
         <>
           <Text>You are not signed in.</Text>
-          <Button title="Sign In" onPress={() => navigation.navigate('SignIn')} />
-          <Button title="Sign Up" onPress={() => navigation.navigate('SignUp')} />
+          <Button
+            title='すでに会員の方はこちら'
+            onPress={() => (navigation.navigate as any)('SignIn')}
+            buttonStyle={styles.button}
+            textStyle={styles.buttonText}
+          />
+          <Button
+            title='会員ではない方はこちら'
+            onPress={() => (navigation.navigate as any)('SignUp')}
+            buttonStyle={styles.button}
+            textStyle={styles.buttonText}
+          />
         </>
       )}
     </View>
