@@ -40,3 +40,13 @@ export const SignIn = async(email: string, password: string) => {
   }
 }
 
+export const SignOut = async () => {
+  try {
+    await Auth.signOut();
+    console.log('User signed out');
+  } catch (error) {
+    console.log('error signing out:', error);
+    throw error;
+  }
+}
+
