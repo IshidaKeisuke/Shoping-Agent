@@ -6,6 +6,7 @@ import { ScreenProps } from '../../../types/interface'
 import styles from './Styles';
 import Input from '../../../components/Input/Input';
 import Button from '../../../components/Button/Button';
+import { createUser } from '../../../services/UserService';
 
 const ConfirmSignUpScreen: React.FC<ScreenProps<'ConfirmSignUp'>> = ({ navigation, route }) => {
   const { email } = route.params;
@@ -16,10 +17,15 @@ const ConfirmSignUpScreen: React.FC<ScreenProps<'ConfirmSignUp'>> = ({ navigatio
     try {
       await ConfirmSignUp(email, code);
       setError('');
+      await createUser(email)
       navigation.navigate('HomeScreen');
     } catch (err) {
       const error = err as Error;
-      setError(error.message);
+      if (error.message === 'Invalid verification code provided, please try again.') {
+        setError('認証コードは正しくないです');
+      } else {
+        setError(error.message);
+      }
     }
   };
 

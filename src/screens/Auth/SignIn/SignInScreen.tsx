@@ -6,20 +6,24 @@ import { ScreenProps } from '../../../types/interface'
 import styles from './Styles';
 import Input from '../../../components/Input/Input';
 import Button from '../../../components/Button/Button';
+import Loading from '../../../components/Loading/Loading';
 
 const SignInScreen: React.FC<ScreenProps<'SignIn'>> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSignIn = async () => {
+    setIsLoading(true);
     try {
       await SignIn(email, password);
       setError('');
       navigation.navigate('HomeScreen')
     } catch (err) {
-      const error = err as Error;
-      setError(error.message);
+      setError('メールアドレスもしくはパスワードに誤りがあります');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -29,6 +33,10 @@ const SignInScreen: React.FC<ScreenProps<'SignIn'>> = ({ navigation }) => {
   }
 
   const isFormValid = isValidEmail() && password !== '';
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <View style={styles.container}>

@@ -7,7 +7,6 @@ import Loading from '../../components/Loading/Loading';
 import Button from '../../components/Button/Button';
 import styles from './Styles';
 
-
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
   const [user, setUser] = useState<CognitoUser | null>(null);
@@ -40,7 +39,7 @@ const HomeScreen: React.FC = () => {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       {user ? (
         <>
           <Text>Welcome, {user.getUsername()}</Text>
@@ -48,21 +47,21 @@ const HomeScreen: React.FC = () => {
         </>
       ) : (
         <>
-          <Text>You are not signed in.</Text>
-          <Button
-            title='すでに会員の方はこちら'
-            onPress={() => (navigation.navigate as any)('SignIn')}
-            buttonStyle={styles.button}
-            textStyle={styles.buttonText}
-          />
-          <Button
-            title='会員ではない方はこちら'
-            onPress={() => (navigation.navigate as any)('SignUp')}
-            buttonStyle={styles.button}
-            textStyle={styles.buttonText}
-          />
-        </>
-      )}
+        <Text>You are not signed in.</Text>
+        <Button
+          title='すでに会員の方はこちら'
+          onPress={() => (navigation.navigate as any)('SignIn')}
+          buttonStyle={styles.button}
+          textStyle={styles.buttonText}
+        />
+        <Button
+          title='会員ではない方はこちら'
+          onPress={() => (navigation.navigate as any)('SignUp')}
+          buttonStyle={styles.button}
+          textStyle={styles.buttonText}
+        />
+      </>
+    )}
     </View>
   );
 }

@@ -20,7 +20,7 @@ export default function App() {
         <Stack.Screen name="SignUp" component={SignUpScreen} options={screenOptions('会員登録')} />
         <Stack.Screen name="SignIn" component={SignInScreen} options={screenOptions('ログイン')} />
         <Stack.Screen name="ConfirmSignUp" component={ConfirmSignUpScreen} options={screenOptions('コード登録')} />
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} options={screenOptions('ホーム')} />
       </Stack.Navigator>
     </NavigationContainer>
   );

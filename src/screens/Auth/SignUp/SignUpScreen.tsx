@@ -1,27 +1,31 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { StackScreenProps } from '@react-navigation/stack';
 import { HelperText } from 'react-native-paper';
 import { SignUp } from '../../../services/AuthService';
 import styles from './Styles';
 import Input from '../../../components/Input/Input';
 import Button from '../../../components/Button/Button';
-import { ScreenProps } from '../../../types/interface'
+import { ScreenProps } from '../../../types/interface';
+import Loading from '../../../components/Loading/Loading';
 
 const SignUpScreen: React.FC<ScreenProps<'SignUp'>> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSignUp = async () => {
+    setLoading(true);
     try {
       await SignUp(email, password);
       setError('');
       navigation.navigate('ConfirmSignUp', { email });
     } catch (err) {
       const error = err as Error;
-      console.log(error)
+      console.log(error);
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -32,6 +36,9 @@ const SignUpScreen: React.FC<ScreenProps<'SignUp'>> = ({ navigation }) => {
 
   const isFormValid = isValidEmail() && password.length >= 8;
 
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <View style={styles.container}>
       <Input
