@@ -1,11 +1,12 @@
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import { User } from '../models/User';
 import { generateRandomString } from '../utils';
+import { HASURA_URL, HASURA_ADMIN_SECRET } from '@env'
 
 const client = new ApolloClient({
-  uri: process.env.HASURA_URL,
+  uri: HASURA_URL,
   headers: {
-    'x-hasura-admin-secret': process.env.HASURA_ADMIN_SECRET as string,
+    'x-hasura-admin-secret': HASURA_ADMIN_SECRET,
   },
   cache: new InMemoryCache(),
 });
@@ -36,7 +37,7 @@ export const createUser = async (email: string): Promise<User> => {
     name: name,
     email: email,
     gender: '',
-    birthday: '',
+    prefecture: '',
     address: ''
   };
 
@@ -48,7 +49,7 @@ export const createUser = async (email: string): Promise<User> => {
 					name
 					email
 					gender
-					birthday
+          prefecture
 					address
         }
       }
@@ -57,6 +58,6 @@ export const createUser = async (email: string): Promise<User> => {
       user,
     },
   });
-
+  console.log(data.insert_users_one)
   return data.insert_users_one;
 };
