@@ -18,10 +18,10 @@ const SignInScreen: React.FC<ScreenProps<'SignIn'>> = ({ navigation }) => {
     setIsLoading(true);
     try {
       await SignIn(email, password);
-      setError('');
-      navigation.navigate('HomeScreen')
+      navigation.navigate('HomeScreen');
     } catch (err) {
       setError('メールアドレスもしくはパスワードに誤りがあります');
+      console.error(err);
     } finally {
       setIsLoading(false);
     }

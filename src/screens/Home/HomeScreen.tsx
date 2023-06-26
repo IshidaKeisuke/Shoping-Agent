@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import { Appbar, Card, Title, Paragraph } from 'react-native-paper';
 import { Auth } from 'aws-amplify';
 import { CognitoUser } from 'amazon-cognito-identity-js';
 import { useNavigation } from '@react-navigation/native';
 import Loading from '../../components/Loading/Loading';
-import Button from '../../components/Button/Button';
 import styles from './Styles';
+import Button from '../../components/Button/Button';
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -40,28 +41,36 @@ const HomeScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      {user ? (
-        <>
-          <Text>Welcome, {user.getUsername()}</Text>
-          <Button title="Sign out" onPress={handleSignOut} />
-        </>
-      ) : (
-        <>
-        <Text>You are not signed in.</Text>
+      <Appbar.Header>
+        <Appbar.Content title="Welcome!" />
+      </Appbar.Header>
+
+      <Card style={styles.card}>
+        <Card.Content>
+          <Title>Welcome, {user ? user.getUsername() : 'Guest'}</Title>
+          <Paragraph>This is your Home Screen.</Paragraph>
+        </Card.Content>
+      </Card>
+      <Button
+        title='すでに会員の方はこちら'
+        onPress={() => (navigation.navigate as any)('SignIn')}
+        buttonStyle={styles.button}
+        // textStyle={styles.buttonText}
+      />
+      <Button
+        title='会員ではない方はこちら'
+        onPress={() => (navigation.navigate as any)('SignUp')}
+        buttonStyle={styles.button}
+        // textStyle={styles.buttonText}
+      />
+
+      {user && (
         <Button
-          title='すでに会員の方はこちら'
-          onPress={() => (navigation.navigate as any)('SignIn')}
-          buttonStyle={styles.button}
-          textStyle={styles.buttonText}
-        />
-        <Button
-          title='会員ではない方はこちら'
-          onPress={() => (navigation.navigate as any)('SignUp')}
-          buttonStyle={styles.button}
-          textStyle={styles.buttonText}
-        />
-      </>
-    )}
+          title="ログアウト"
+          onPress={handleSignOut} 
+          buttonStyle={styles.button}        />
+
+      )}
     </View>
   );
 }

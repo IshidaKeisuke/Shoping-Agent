@@ -1,9 +1,14 @@
+// Styles.ts
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+  },
+  card: {
+    margin: 20,
+    padding: 20,
   },
   button: {
     backgroundColor: '#007BFF',
@@ -26,6 +31,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+
 });
 
-export default styles
+export default styles;
