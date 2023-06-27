@@ -9,14 +9,22 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 16,
     alignItems: 'center',
-    flexDirection: 'row', // アイコンを中央に配置するために追加
+    flexDirection: 'row',
   },
   headerText: {
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
-    marginLeft: 10, // アイコンとテキストの間隔を調整するために追加
+    marginLeft: 10,
   },
+  iconContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },  
   content: {
     flex: 1,
     justifyContent: 'center',

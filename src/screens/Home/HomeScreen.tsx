@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons' // replace faMugSaucer with faUser
+import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { Auth } from 'aws-amplify';
 import { CognitoUser } from 'amazon-cognito-identity-js';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -50,9 +50,9 @@ const HomeScreen: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>UberEats</Text>
-        <View style={styles.container}>
-        <FontAwesomeIcon icon={faUser} />
-       </View>
+        <View style={styles.iconContainer}>
+          <FontAwesomeIcon icon={faUser} size={50} />
+        </View>
       </View>
       <View style={styles.content}>
         {user ? (
